@@ -92,9 +92,9 @@ resource "kubernetes_service" "carts" {
     labels = {
       name = "carts"
     }
-    annotations = {
-      "prometheus.io/scrape" = "true"
-    }
+    # annotations = {
+    #   "prometheus.io/scrape" = "true"
+    # }
   }
 
   spec {
@@ -267,9 +267,9 @@ resource "kubernetes_service" "catalogue" {
     labels = {
       name = "catalogue"
     }
-    annotations = {
-      "prometheus.io/scrape" = "true"
-    }
+    # annotations = {
+    #   "prometheus.io/scrape" = "true"
+    # }
   }
   spec {
     port {
@@ -430,9 +430,9 @@ resource "kubernetes_service" "front-end" {
     labels = {
       name = "front-end"
     }
-    annotations = {
-      "prometheus.io/scrape" = "true"
-    }
+    # annotations = {
+    #   "prometheus.io/scrape" = "true"
+    # }
     
   }
 
@@ -523,9 +523,9 @@ resource "kubernetes_deployment" "orders" {
 resource "kubernetes_service" "orders" {
   metadata {
     name = "orders"
-    annotations = {
-      "prometheus.io/scrape" = "true"
-    }
+    # annotations = {
+    #   "prometheus.io/scrape" = "true"
+    # }
     labels = {
       name = "orders"
     }
@@ -694,9 +694,9 @@ resource "kubernetes_deployment" "payment" {
 resource "kubernetes_service" "payment" {
   metadata {
     name = "payment"
-    annotations = {
-      "prometheus.io/scrape" = "true"
-    }
+    # annotations = {
+    #   "prometheus.io/scrape" = "true"
+    # }
     labels = {
       name = "payment"
     }
@@ -769,9 +769,9 @@ resource "kubernetes_deployment" "queue-master" {
 resource "kubernetes_service" "queue-master" {
   metadata {
     name = "queue-master"
-    annotations = {
-      "prometheus.io/scrape" = "true"
-    }
+    # annotations = {
+    #   "prometheus.io/scrape" = "true"
+    # }
     labels = {
       name = "queue-master"
     }
@@ -850,10 +850,10 @@ resource "kubernetes_deployment" "rabbitmq" {
 resource "kubernetes_service" "rabbitmq" {
   metadata {
     name = "rabbitmq"
-    annotations = {
-      "prometheus.io/scrape" = "true"
-      "prometheus.io/port"   = "9090"
-    }
+    # annotations = {
+    #   "prometheus.io/scrape" = "true"
+    #   "prometheus.io/port"   = "9090"
+    # }
     labels = {
       name = "rabbitmq"
     }
@@ -898,9 +898,9 @@ resource "kubernetes_deployment" "session-db" {
         labels = {
           name = "session-db"
         }
-        annotations = {
-          "prometheus.io/scrape" = "true"
-        }
+        # annotations = {
+        #   "prometheus.io/scrape" = "true"
+        # }
       }
       spec {
         container {
@@ -1024,9 +1024,9 @@ resource "kubernetes_deployment" "shipping" {
 resource "kubernetes_service" "shipping" {
   metadata {
     name = "shipping"
-    annotations = {
-      "prometheus.io/scrape" = "true"
-    }
+    # annotations = {
+    #   "prometheus.io/scrape" = "true"
+    # }
     labels = {
       name = "shipping"
     }
@@ -1124,9 +1124,9 @@ resource "kubernetes_deployment" "user" {
 resource "kubernetes_service" "user" {
   metadata {
     name = "user"
-    annotations = {
-      "prometheus.io/scrape" = "true"
-    }
+    # annotations = {
+    #   "prometheus.io/scrape" = "true"
+    # }
     labels = {
       name = "user"
     }
