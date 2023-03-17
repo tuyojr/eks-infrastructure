@@ -28,7 +28,7 @@ pipeline {
         stage("Deploy applications to the cluster") {
             steps {
                 script {
-                    dir (jenkins-pipeline/k8s) {
+                    dir ('jenkins-pipeline/k8s') {
                         sh 'terraform init'
                         sh 'terraform apply -auto-approve'
                     }
