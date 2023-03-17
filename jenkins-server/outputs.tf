@@ -6,6 +6,6 @@ output "aws_vpc" {
   value = module.vpc.vpc_id
 }
 
-output "aws_subnet" {
+output "aws_private_subnet" {
   value = module.vpc.private_subnets
 }
