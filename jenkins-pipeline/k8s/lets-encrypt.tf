@@ -21,7 +21,7 @@ resource "tls_cert_request" "tuyojr-certifcate" {
 }
 
 resource "acme_certificate" "tuyojr-cert" {
-  account_key_pem         = tls_private_key.reg_private_key.public_key_pem
+  account_key_pem         = acme_registration.reg.account_key_pem
   certificate_request_pem = tls_cert_request.tuyojr-certifcate.cert_request_pem
 
   dns_challenge {
