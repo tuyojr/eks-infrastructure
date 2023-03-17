@@ -13,18 +13,13 @@ pipeline {
         }
 
         stage("Create EKS Infrastructure") {
-           steps {
-                withCredentials([[
-                    $class: 'AmazonWebServicesCredentialsBinding',
-                    accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-                    secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
-                    credentialsId: 'aws-credentials'
-                ]]) {
+            steps {
+                script {
                     dir ('aws') {
                         sh 'terraform init'
-                        sh 'terraform apply --auto-approve'
+                        sh 'terraform apply -auto-approve'
                     }
-                } 
+                }
             }
         }
     }
