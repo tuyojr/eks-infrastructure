@@ -6,7 +6,7 @@ resource "kubernetes_ingress" "notes-app-ingress" {
   spec {
     tls {
       hosts       = ["notes-app.tuyojr.me"]
-      secret_name = acme_certificate.tuyojr-cert.id
+      secret_name = module.acm.arn
     }
 
     rule {
