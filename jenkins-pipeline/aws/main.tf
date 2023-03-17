@@ -127,7 +127,7 @@ resource "aws_eks_addon" "ebs-csi" {
 resource "aws_eks_addon" "weave-net" {
   cluster_name = module.eks.cluster_name
   addon_name   = "weave-net"
-  addon_version = "latest"
+  addon_version = "v2.9.1-eksbuild.1"
   tags = {
     "eks_addon" = "weave-net"
     "terraform" = "true"
