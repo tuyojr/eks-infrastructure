@@ -32,7 +32,7 @@ resource "kubernetes_ingress" "sock-shop-ingress" {
   spec {
     tls {
       hosts       = ["sock-shop.tuyojr.me"]
-      secret_name = acme_certificate.tuyojr-cert.id
+      secret_name = module.acm.arn
     }
     rule {
       host = "sock-shop.tuyojr.me"
