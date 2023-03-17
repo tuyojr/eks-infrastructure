@@ -17,7 +17,7 @@ pipeline {
         stage("Create EKS Infrastructure") {
             steps {
                 script {
-                    dir ('aws') {
+                    dir ('jenkins-pipeline/aws') {
                         sh 'terraform init'
                         sh 'terraform apply -auto-approve'
                     }
