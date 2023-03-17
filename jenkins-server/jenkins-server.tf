@@ -1,5 +1,5 @@
 resource "aws_instance" "jenkins-server" {
-    ami = "ami-005f9685cb30f234b"
+    ami = "ami-0557a15b87f6559cf"
     instance_type = "t2.micro"
     key_name = "awsKeyPair"
     subnet_id = module.vpc.public_subnets[0]
