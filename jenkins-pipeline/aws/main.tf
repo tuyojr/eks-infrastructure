@@ -29,8 +29,8 @@ module "eks" {
   cluster_name    = local.cluster_name
   cluster_version = "1.25"
 
-  vpc_id                         = data.terraform_remote_state.jenkins-server.outputs.vpc_id
-  subnet_ids                     = data.terraform_remote_state.jenkins-server.outputs.private_subnets
+  vpc_id                         = data.terraform_remote_state.jenkins-server.outputs.aws_vpc.value
+  subnet_ids                     = data.terraform_remote_state.jenkins-server.outputs.aws_subnet.value
   cluster_endpoint_public_access = true
 
   eks_managed_node_group_defaults = {
