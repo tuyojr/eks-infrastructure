@@ -3,7 +3,6 @@ resource "helm_release" "prometheus" {
     repository = "https://prometheus-community.github.io/helm-charts"
     chart      = "prometheus"
     namespace  = "monitoring"
-    version    = "13.9.0"
 
     set {
       name  = "server.service.type"
@@ -16,7 +15,6 @@ resource "helm_release" "grafana" {
     repository = "https://grafana.github.io/helm-charts"
     chart      = "grafana"
     namespace  = "monitoring"
-    version    = "6.1.0"
 
     set {
       name  = "service.type"
