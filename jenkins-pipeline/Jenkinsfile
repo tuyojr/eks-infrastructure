@@ -16,14 +16,19 @@ pipeline {
 
         stage("Create EKS Infrastructure") {
             steps {
-                // withCredentials([[
-                //     $class: 'AmazonWebServicesCredentialsBinding',
-                //     accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-                //     secretKeyVariable: 'AWS_SECRET_ACCESS_KEY',
-                //     credentialsId: 'aws-credentials'
-                // ]])
                 script {
                     dir ('jenkins-pipeline/aws') {
+                        sh 'terraform init'
+                        sh 'terraform apply -auto-approve'
+                    }
+                }
+            }
+        }
+
+        stage("Deploy applications to the cluster") {
+            steps {
+                script {
+                    dir (jenkins-pipeline/k8s) {
                         sh 'terraform init'
                         sh 'terraform apply -auto-approve'
                     }
