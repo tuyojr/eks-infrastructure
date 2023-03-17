@@ -124,12 +124,25 @@ resource "aws_eks_addon" "ebs-csi" {
   }
 }
 
-resource "aws_eks_addon" "weave-net" {
-  cluster_name = module.eks.cluster_name
-  addon_name   = "weave-net"
-  addon_version = "v2.9.1-eksbuild.1"
-  tags = {
-    "eks_addon" = "weave-net"
-    "terraform" = "true"
-  }
-}
+# resource "aws_eks_addon" "weave-net" {
+#   cluster_name = module.eks.cluster_name
+#   addon_name   = "weave-net"
+#   addon_version = "v2.9.1-eksbuild.1"
+#   tags = {
+#     "eks_addon" = "weave-net"
+#     "terraform" = "true"
+#   }
+# }
+# make sure you have the latest version of kubectl on your lcoal machine
+# on your local machine, run the following command to install the aws-iam-authenticator
+# curl -o aws-iam-authenticator https://amazon-eks.s3.us-west-2.amazonaws.com/1.21.2/2021-07-05/bin/linux/amd64/aws-iam-authenticator
+# chmod +x ./aws-iam-authenticator
+# mkdir -p $HOME/bin && cp ./aws-iam-authenticator $HOME/bin/aws-iam-authenticator && export PATH=$PATH:$HOME/bin
+# echo 'export PATH=$PATH:$HOME/bin' >> ~/.bashrc
+# aws-iam-authenticator help
+# aws-iam-authenticator version
+# next, configure kubectl to connect to your cluster
+# aws eks --region us-east-1 update-kubeconfig --name <cluster name created>
+# install the weave-net CNI plugin
+# kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml
+
