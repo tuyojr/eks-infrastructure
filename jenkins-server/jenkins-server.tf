@@ -6,7 +6,6 @@ resource "aws_instance" "jenkins-server" {
     vpc_security_group_ids = [aws_security_group.jenkins-sg.id]
     availability_zone = module.vpc.azs[0]
     associate_public_ip_address = true
-    user_data = file("jenkins-server-script.sh")
     tags = {
         Name = "jenkins-server"
     }
