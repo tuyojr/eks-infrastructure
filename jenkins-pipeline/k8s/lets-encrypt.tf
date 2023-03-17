@@ -29,21 +29,21 @@
 #   }
 # }
 
-module "acm" {
-  source = "terraform-module/acm/aws"
-  version = "~> 2"
+# module "acm" {
+#   source = "terraform-module/acm/aws"
+#   version = "~> 2"
 
-  domain_name = local.defaults[0]
-  zone_id = aws_route53_zone.domain.zone_id
+#   domain_name = local.defaults[0]
+#   zone_id = aws_route53_zone.domain.zone_id
 
-  validation_method = "DNS"
+#   validation_method = "DNS"
 
-  subject_alternative_names = [
-    local.defaults[1],
-    local.defaults[2]
-  ]
+#   subject_alternative_names = [
+#     local.defaults[1],
+#     local.defaults[2]
+#   ]
 
-  tags = {
-    Name = local.defaults[0]
-  }
-}
+#   tags = {
+#     Name = local.defaults[0]
+#   }
+# }
