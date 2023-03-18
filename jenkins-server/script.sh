@@ -58,3 +58,8 @@ mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/
 # initialization file so that it is configured when 
 # you open a shell.
 echo 'export PATH=$PATH:$HOME/bin' >> ~/.bashrc
+
+# Install helm
+sudo curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+sudo chmod 700 get_helm.sh
+sudo ./get_helm.sh
