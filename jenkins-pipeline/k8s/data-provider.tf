@@ -19,10 +19,11 @@ data "aws_eks_cluster_auth" "cluster" {
   name = data.terraform_remote_state.eks.outputs.cluster_name
 }
 
-data "aws_eks_node_group" "node_group" {
-  cluster_name = data.aws_eks_cluster.cluster
-  node_group_name = data.terraform_remote_state.eks.outputs.node_group_name
-}
+# data "aws_eks_node_group" "node_group" {
+#   cluster_name = "${data.aws_eks_cluster.cluster.name}"
+#   for_each = data.terraform_remote_state.eks.output.eks_managed_node_groups
+#   node_group_name = each.value.name
+# }
 
 provider "kubernetes" {
   host                   = data.aws_eks_cluster.cluster.endpoint

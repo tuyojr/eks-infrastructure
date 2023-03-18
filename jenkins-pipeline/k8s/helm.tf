@@ -33,7 +33,7 @@ resource "helm_release" "nginx-ingress" {
 }
 
 resource "kubernetes_namespace" "monitoring" {
-  depends_on = [data.aws_eks_node_group.node_group, time_sleep.wait_for_kubernetes]
+  depends_on = [time_sleep.wait_for_kubernetes]
     metadata {
         name = "prometheus"
     }
