@@ -4,9 +4,9 @@ resource "kubernetes_ingress_v1" "notes-app-ingress" {
     labels = {
       name = "notes-app-ingress"
     }
-  }
-  annotations = {
+    annotations = {
     "kubernetes.io/ingress.class" = "nginx"
+  }
   }
 
   spec {
@@ -15,8 +15,12 @@ resource "kubernetes_ingress_v1" "notes-app-ingress" {
       http {
         path {
           backend {
-            service_name = "notes-app-deployment"
-            service_port = 80
+            service {
+              name = "notes-app-deployment"
+              port {
+                number = 80
+              }
+            }
           }
         }
       }
@@ -38,8 +42,12 @@ resource "kubernetes_ingress_v1" "sock-shop-ingress" {
       http {
         path {
           backend {
-            service_name = "front-end"
-            service_port = 80
+            service {
+              name = "front-end"
+              port {
+                number = 80
+              }
+            }
           }
         }
       }
