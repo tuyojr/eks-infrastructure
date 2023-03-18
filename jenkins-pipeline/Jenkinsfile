@@ -42,7 +42,8 @@ pipeline {
                     dir ('jenkins-pipeline/k8s') {
                         sh "aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-EVLKQ4RR"
                         sh 'helm repo add eks https://aws.github.io/eks-charts'
-                        sh 'helm upgrade -i -n ingress-aws --create-namespace ingress-aws aws/aws-load-balancer-controller -f aws-loadbalancer.yml'
+                        sh 'helm repo update'
+                        sh 'helm upgrade -i aws-load-balancer-controller eks/aws-load-balancer-controller -n kube-system --set clusterName=tuyojr-eks-EVLKQ4RR --set serviceAccount.create=false --set serviceAccount.name=aws-load-balancer-controller'
                     }
                 }
             }
