@@ -29,3 +29,32 @@ sudo systemctl start jenkins
 
 # You can check the status of the Jenkins service using the command:
 sudo systemctl status jenkins
+
+# install git
+sudo yum install git -y
+
+# install yum-config-manager to manage your repositories
+sudo yum install -y yum-utils
+
+# Use yum-config-manager to add the official HashiCorp Linux repository.
+sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
+
+# Install Terraform from the new repository.
+Install Terraform from the new repository.
+
+# install kubectl
+sudo curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.23.6/bin/linux/amd64/kubectl
+
+# Apply execute permissions to the binary.
+chmod +x ./kubectl
+
+# Copy the binary to a folder in your PATH. If you 
+# have already installed a version of kubectl, then 
+# we recommend creating a $HOME/bin/kubectl and 
+# ensuring that $HOME/bin comes first in your $PATH.
+mkdir -p $HOME/bin && cp ./kubectl $HOME/bin/kubectl && export PATH=$PATH:$HOME/bin
+
+# (Optional) Add the $HOME/bin path to your shell 
+# initialization file so that it is configured when 
+# you open a shell.
+echo 'export PATH=$PATH:$HOME/bin' >> ~/.bashrc
