@@ -27,3 +27,20 @@ resource "aws_route53_record" "sub-domain-2" {
 
   records = ["a8f4bbcf797914a53adb1a0c8838140a-502033186.us-east-1.elb.amazonaws.com"]
 }
+
+module "acm" {
+  source  = "terraform-aws-modules/acm/aws"
+  version = "~> 4.0"
+
+  domain_name  = local.defaults[0]
+  zone_id      = aws_route53_zone.domain.zone_id
+
+  subject_alternative_names = [
+    "${local.defaults[1]}.${local.defaults[0]}",
+    "${local.defaults[2]}.${local.defaults[0]}",
+  ]
+
+  tags = {
+    Name = "${local.defaults[0]}"
+  }
+}
