@@ -4,11 +4,6 @@ metadata:
   name: notes-app-deployment
   labels:
     app: notes-app
-  # annotations to allow Prometheus to discover 
-  # the targets
-  annotations:
-    prometheus.io/scrape: "true"
-    prometheus.io/port: "3000"  
 spec:
   replicas: 3
   selector:
@@ -35,6 +30,10 @@ kind: Service
 metadata:
  # Service name
  name: notes-app-deployment
+ # annotations to allow Prometheus to discover 
+ # the targets
+ annotations:
+  prometheus.io/scrape: "true" 
 spec:
  selector:
    # Selector for Pods
