@@ -16,7 +16,7 @@ resource "kubernetes_ingress" "notes-app-ingress" {
         path {
           backend {
             service_name = kubernetes_service.notes-app.metadata[0].name
-            service_port = 8080
+            service_port = 80
           }
         }
       }

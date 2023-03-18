@@ -30,7 +30,7 @@ pipeline {
                 script {
                     dir ('jenkins-pipeline/k8s') {
                         sh "aws eks update-kubeconfig --name tuyojr-eks-EVLKQ4RR"
-                        sh 'kubectl apply -f notes-app.yml'
+                        sh 'kubectl delete -f notes-app.yml'
                     }
                 }
             }
@@ -52,7 +52,7 @@ pipeline {
                 script {
                     dir ('jenkins-pipeline/k8s') {
                         sh "aws eks update-kubeconfig --name tuyojr-eks-EVLKQ4RR"
-                        sh 'kubectl apply -f sock-shop.yml'
+                        sh 'kubectl delete -f sock-shop.yml'
                     }
                 }
             }
