@@ -61,7 +61,7 @@ pipeline {
         stage("Deploy Prometheus Manifests") {
             steps {
                 script {
-                    dir ('jenkins-pipeline/manifests-monitoring') {
+                    dir ('jenkins-pipeline') {
                         sh 'aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-EVLKQ4RR'
                         sh 'kubectl apply -f manifests-monitoring/'
                     }
