@@ -25,14 +25,14 @@ pipeline {
             }
         }
 
-        // stage("Deploy notes-app to the cluster") {
-        //     steps {
-        //         script {
-        //             dir ('jenkins-pipeline/k8s') {
-        //                 sh 'kubectl apply -f notes-app.yml'
-        //             }
-        //         }
-        //     }
-        // }
+        stage("Deploy notes-app to the cluster") {
+            steps {
+                script {
+                    dir ('jenkins-pipeline/k8s') {
+                        sh 'kubectl apply -f notes-app.yml'
+                    }
+                }
+            }
+        }
     }
 }
