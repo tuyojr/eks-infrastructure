@@ -1,21 +1,21 @@
-resource "kubernetes_ingress" "notes-app-ingress" {
+resource "kubernetes_ingress_v1" "notes-app-ingress" {
   metadata {
     name = "notes-app-ingress"
+    labels = {
+      name = "notes-app-ingress"
+    }
+  }
+  annotations = {
+    "kubernetes.io/ingress.class" = "nginx"
   }
 
   spec {
-    tls {
-      hosts       = ["notes-app.tuyojr.me"]
-      secret_name = module.acm.arn
-    }
-
     rule {
       host = "notes-app.tuyojr.me"
-
       http {
         path {
           backend {
-            service_name = kubernetes_service.notes-app.metadata[0].name
+            service_name = "notes-app-deployment"
             service_port = 80
           }
         }
@@ -24,22 +24,21 @@ resource "kubernetes_ingress" "notes-app-ingress" {
   }
 }
 
-resource "kubernetes_ingress" "sock-shop-ingress" {
+resource "kubernetes_ingress_v1" "sock-shop-ingress" {
   metadata {
     name      = "sock-shop-ingress"
-    namespace = kubernetes_namespace.sock-shop.metadata[0].name
+    namespace = "sock-shop"
+    labels = {
+      name = "front-end"
+    }
   }
   spec {
-    tls {
-      hosts       = ["sock-shop.tuyojr.me"]
-      secret_name = module.acm.arn
-    }
     rule {
       host = "sock-shop.tuyojr.me"
       http {
         path {
           backend {
-            service_name = kubernetes_service.front-end.metadata[0].name
+            service_name = "front-end"
             service_port = 80
           }
         }
