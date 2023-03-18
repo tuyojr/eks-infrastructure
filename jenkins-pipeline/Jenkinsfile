@@ -29,7 +29,7 @@ pipeline {
             steps {
                 script {
                     dir ('jenkins-pipeline/k8s') {
-                        sh "aws eks update-kubeconfig --name tuyojr-eks-EVLKQ4RR"
+                        sh "aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-EVLKQ4RR"
                         sh 'kubectl apply -k "github.com/aws/eks-charts/stable/aws-load-balancer-controller//crds?ref=master"'
                     }
                 }
@@ -40,9 +40,9 @@ pipeline {
             steps {
                 script {
                     dir ('jenkins-pipeline/k8s') {
-                        sh "aws eks update-kubeconfig --name tuyojr-eks-EVLKQ4RR"
+                        sh "aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-EVLKQ4RR"
                         sh 'helm repo add eks https://aws.github.io/eks-charts'
-                        sh 'helm upgrade -i -n ingress-aws --create-namespace ingress-aws aws/aws-load-balancer-controller -f aws-loadbalancer.yml --version 1.4.3'
+                        sh 'helm upgrade -i -n ingress-aws --create-namespace ingress-aws aws/aws-load-balancer-controller -f aws-loadbalancer.yml'
                     }
                 }
             }
@@ -52,7 +52,7 @@ pipeline {
             steps {
                 script {
                     dir ('jenkins-pipeline/k8s') {
-                        sh "aws eks update-kubeconfig --name tuyojr-eks-EVLKQ4RR"
+                        sh "aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-EVLKQ4RR"
                         sh 'kubectl apply -f notes-app.yml'
                     }
                 }
@@ -63,7 +63,7 @@ pipeline {
             steps {
                 script {
                     dir ('jenkins-pipeline/k8s') {
-                        sh "aws eks update-kubeconfig --name tuyojr-eks-EVLKQ4RR"
+                        sh "aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-EVLKQ4RR"
                         sh 'kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml'
                     }
                 }
@@ -74,7 +74,7 @@ pipeline {
             steps {
                 script {
                     dir ('jenkins-pipeline/k8s') {
-                        sh "aws eks update-kubeconfig --name tuyojr-eks-EVLKQ4RR"
+                        sh "aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-EVLKQ4RR"
                         sh 'kubectl delete -f sock-shop.yml'
                     }
                 }
@@ -85,7 +85,7 @@ pipeline {
             steps {
                 script {
                     dir ('jenkins-pipeline') {
-                        sh "aws eks update-kubeconfig --name tuyojr-eks-EVLKQ4RR"
+                        sh "aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-EVLKQ4RR"
                         sh 'kubectl apply -f manifests-monitoring/'
                     }
                 }
@@ -96,7 +96,7 @@ pipeline {
             steps {
                 script {
                     dir ('jenkins-pipeline/k8s') {
-                        sh "aws eks update-kubeconfig --name tuyojr-eks-EVLKQ4RR"
+                        sh "aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-EVLKQ4RR"
                         sh 'kubectl apply -f ingress.yml'
                     }
                 }
