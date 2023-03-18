@@ -25,12 +25,35 @@ pipeline {
             }
         }
 
+        stage("Install Ingress Controller from Kubectl") {
+            steps {
+                script {
+                    dir ('jenkins-pipeline/k8s') {
+                        sh "aws eks update-kubeconfig --name tuyojr-eks-EVLKQ4RR"
+                        sh 'kubectl apply -k "github.com/aws/eks-charts/stable/aws-load-balancer-controller//crds?ref=master"'
+                    }
+                }
+            }
+        }
+
+        stage("Install AWS LoadBalancer using Helm") {
+            steps {
+                script {
+                    dir ('jenkins-pipeline/k8s') {
+                        sh "aws eks update-kubeconfig --name tuyojr-eks-EVLKQ4RR"
+                        sh 'helm repo add eks https://aws.github.io/eks-charts'
+                        sh 'helm upgrade -i -n ingress-aws --create-namespace ingress-aws aws/aws-load-balancer-controller -f aws-loadbalancer.yml --version 1.4.3'
+                    }
+                }
+            }
+        }
+
         stage("Deploy notes-app to the cluster") {
             steps {
                 script {
                     dir ('jenkins-pipeline/k8s') {
                         sh "aws eks update-kubeconfig --name tuyojr-eks-EVLKQ4RR"
-                        sh 'kubectl delete -f notes-app.yml'
+                        sh 'kubectl apply -f notes-app.yml'
                     }
                 }
             }
@@ -53,6 +76,28 @@ pipeline {
                     dir ('jenkins-pipeline/k8s') {
                         sh "aws eks update-kubeconfig --name tuyojr-eks-EVLKQ4RR"
                         sh 'kubectl delete -f sock-shop.yml'
+                    }
+                }
+            }
+        }
+
+        stage("Create Monitoring Tools") {
+            steps {
+                script {
+                    dir ('jenkins-pipeline') {
+                        sh "aws eks update-kubeconfig --name tuyojr-eks-EVLKQ4RR"
+                        sh 'kubectl apply -f manifests-monitoring/'
+                    }
+                }
+            }
+        }
+
+        stage("Create Ingress") {
+            steps {
+                script {
+                    dir ('jenkins-pipeline/k8s') {
+                        sh "aws eks update-kubeconfig --name tuyojr-eks-EVLKQ4RR"
+                        sh 'kubectl apply -f ingress.yml'
                     }
                 }
             }
