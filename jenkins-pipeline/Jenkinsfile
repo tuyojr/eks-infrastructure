@@ -25,18 +25,6 @@ pipeline {
             }
         }
 
-        stage("Deploy Ingress Controller and Monitoring Stack") {
-            steps {
-                script {
-                    dir ('jenkins-pipeline/k8s') {
-                        sh "aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-EVLKQ4RR"
-                        sh 'terraform init'
-                        sh 'terraform apply -auto-approve'
-                    }
-                }
-            }
-        }
-
         stage("Deploy notes-app to the cluster") {
             steps {
                 script {
@@ -64,7 +52,18 @@ pipeline {
                 script {
                     dir ('jenkins-pipeline/k8s') {
                         sh "aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-EVLKQ4RR"
-                        sh 'kubectl delete -f sock-shop.yml'
+                        sh 'kubectl apply -f sock-shop.yml'
+                    }
+                }
+            }
+        }
+
+        stage("Deploy Prometheus Manifests") {
+            steps {
+                script {
+                    dir ('jenkins-pipeline/manifests-monitoring') {
+                        sh 'aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-EVLKQ4RR'
+                        sh 'kubectl apply -f manifests-monitoring/'
                     }
                 }
             }
