@@ -10,6 +10,11 @@ terraform {
       version = ">= 2.3"
     }
 
+    kubectl = {
+      source = "gavinbunney/kubectl"
+      version = "1.14.0"
+    }
+
     acme = {
       source  = "vancluever/acme"
       version = "~> 2.0"
