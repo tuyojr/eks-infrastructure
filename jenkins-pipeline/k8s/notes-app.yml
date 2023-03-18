@@ -6,9 +6,9 @@ metadata:
     app: notes-app
   # annotations to allow Prometheus to discover 
   # the targets
-  # annotations:
-  #   prometheus.io/scrape: "true"
-  #   prometheus.io/port: "3000"  
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "3000"  
 spec:
   replicas: 3
   selector:
@@ -44,4 +44,4 @@ spec:
  - port: 80
    targetPort: 3000
    protocol: TCP
- type: LoadBalancer
+ type: NodePort
