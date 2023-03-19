@@ -26,17 +26,12 @@ pipeline {
             }
         }
 
-        stage("Install NGINX Ingress with Helm") {
+        stage("Install NGINX Ingress") {
             steps {
                 script {
                     dir ('jenkins-pipeline/aws') {
                         sh 'aws eks --region us-east-1 update-kubeconfig --name $(terraform output -raw cluster_name)'
-                        // sh 'helm upgrade --install ingress-nginx ingress-nginx --repo https://kubernetes.github.io/ingress-nginx --namespace ingress-nginx --create-namespace'
-                        // sh 'kubectl get services -n ingress-nginx ingress-nginx-controller -o=jsonpath="{.status.loadBalancer.ingress[0].hostname}"'
-                        sh 'cd kubernetes-ingress/deployments/helm-chart'
-                        sh 'helm repo add nginx-stable https://helm.nginx.com/stable'
-                        sh 'helm repo update'
-                        sh 'helm uninstall ingress-nginx nginx-stable/nginx-ingress'
+                        sh 'kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.1.1/deploy/static/provider/do/deploy.yaml'
                     }
                 }
             }
@@ -62,7 +57,7 @@ pipeline {
                 script {
                     dir ('jenkins-pipeline/k8s') {
                         sh "aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-vNp6U16l"
-                        sh 'kubectl delete -f notes-app.yml'
+                        sh 'kubectl apply -f notes-app.yml'
                     }
                 }
             }
@@ -73,7 +68,7 @@ pipeline {
                 script {
                     dir ('jenkins-pipeline/k8s') {
                         sh "aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-vNp6U16l"
-                        sh 'kubectl delete -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml'
+                        sh 'kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml'
                     }
                 }
             }
@@ -84,7 +79,7 @@ pipeline {
                 script {
                     dir ('jenkins-pipeline/k8s') {
                         sh "aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-vNp6U16l"
-                        sh 'kubectl delete -f sock-shop.yml'
+                        sh 'kubectl apply -f sock-shop.yml'
                     }
                 }
             }
@@ -95,7 +90,7 @@ pipeline {
                 script {
                     dir ('jenkins-pipeline/k8s') {
                         sh 'aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-vNp6U16l'
-                        sh 'kubectl delete -f ingress.yml'
+                        sh 'kubectl apply -f ingress.yml'
                     }
                 }
             }
@@ -106,7 +101,7 @@ pipeline {
                 script {
                     dir ('jenkins-pipeline') {
                         sh 'aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-vNp6U16l'
-                        sh 'kubectl delete -f manifests-monitoring/'
+                        sh 'kubectl apply -f manifests-monitoring/'
                     }
                 }
             }
