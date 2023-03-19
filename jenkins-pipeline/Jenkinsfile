@@ -46,7 +46,7 @@ pipeline {
                         sh 'helm repo add jetstack https://charts.jetstack.io'
                         sh 'helm repo update'
                         sh 'kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.11.0/cert-manager.crds.yaml'
-                        sh 'helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version v1.11.0'
+                        // sh 'helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version v1.11.0'
                         sh 'kubectl apply -f cert.yml'
                     }
                 }
