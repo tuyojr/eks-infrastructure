@@ -23,7 +23,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: frontend
+            name: front-end
             port:
               number: 80
             namespace: sock-shop
