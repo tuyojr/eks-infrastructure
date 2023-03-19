@@ -2,8 +2,8 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: notes-app-ingress
-  # annotations:
-  #   kubernetes.io/ingress.class: nginx
+  annotations:
+    kubernetes.io/ingress.class: nginx
 spec:
   rules:
   - host: notes-app.tuyojr.me
@@ -22,8 +22,8 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: sock-shop-ingress
-  # annotations:
-  #   kubernetes.io/ingress.class: nginx
+  annotations:
+    kubernetes.io/ingress.class: nginx
   namespace: sock-shop
 spec:
   rules:
