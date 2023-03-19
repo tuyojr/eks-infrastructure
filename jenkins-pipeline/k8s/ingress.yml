@@ -9,10 +9,10 @@ metadata:
 # the notes-app is deployed in the default namespace
 spec:
   rules:
-  - host: tuyojr.me
+  - host: notes-app.tuyojr.me
     http:
       paths:
-      - path: /notes-app
+      - path: /
         pathType: Prefix
         backend:
           service:
@@ -35,10 +35,10 @@ metadata:
   namespace: sock-shop
 spec:
   rules:
-  - host: tuyojr.me
+  - host: sock-shop.tuyojr.me
     http:
       paths:
-      - path: /sock-shop
+      - path: /
         pathType: Prefix
         backend:
           service:
