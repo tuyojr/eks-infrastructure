@@ -33,7 +33,6 @@ pipeline {
                         sh 'aws eks --region us-east-1 update-kubeconfig --name $(terraform output -raw cluster_name)'
                         // sh 'helm upgrade --install ingress-nginx ingress-nginx --repo https://kubernetes.github.io/ingress-nginx --namespace ingress-nginx --create-namespace'
                         // sh 'kubectl get services -n ingress-nginx ingress-nginx-controller -o=jsonpath="{.status.loadBalancer.ingress[0].hostname}"'
-                        sh 'git clone https://github.com/nginxinc/kubernetes-ingress.git --branch v3.0.2'
                         sh 'cd kubernetes-ingress/deployments/helm-chart'
                         sh 'helm repo add nginx-stable https://helm.nginx.com/stable'
                         sh 'helm repo update'
