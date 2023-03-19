@@ -37,6 +37,7 @@ pipeline {
                         sh 'cd kubernetes-ingress/deployments/helm-chart'
                         sh 'helm repo add nginx-stable https://helm.nginx.com/stable'
                         sh 'helm repo update'
+                        sh 'helm uninstall ingress-nginx -n ingress-nginx'
                         sh 'helm install tuyojr-eks nginx-stable/nginx-ingress'
                     }
                 }
