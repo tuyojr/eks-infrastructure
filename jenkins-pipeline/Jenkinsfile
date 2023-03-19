@@ -30,7 +30,7 @@ pipeline {
                 script {
                     dir ('jenkins-pipeline/k8s') {
                         sh "aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-EVLKQ4RR"
-                        sh 'kubectl apply -f notes-app.yml'
+                        sh 'kubectl delete -f notes-app.yml'
                     }
                 }
             }
@@ -41,7 +41,7 @@ pipeline {
                 script {
                     dir ('jenkins-pipeline/k8s') {
                         sh "aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-EVLKQ4RR"
-                        sh 'kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml'
+                        sh 'kubectl delete -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml'
                     }
                 }
             }
@@ -52,7 +52,7 @@ pipeline {
                 script {
                     dir ('jenkins-pipeline/k8s') {
                         sh "aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-EVLKQ4RR"
-                        sh 'kubectl apply -f sock-shop.yml'
+                        sh 'kubectl delete -f sock-shop.yml'
                     }
                 }
             }
@@ -63,7 +63,7 @@ pipeline {
                 script {
                     dir ('jenkins-pipeline') {
                         sh 'aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-EVLKQ4RR'
-                        sh 'kubectl apply -f manifests-monitoring/'
+                        sh 'kubectl delete -f manifests-monitoring/'
                     }
                 }
             }
@@ -75,7 +75,7 @@ pipeline {
                     dir ('jenkins-pipeline/k8s') {
                         sh 'aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-EVLKQ4RR'
                         sh 'terraform init'
-                        sh 'terraform apply -auto-approve'
+                        sh 'terraform destroy -auto-approve'
                     }
                 }
             }
