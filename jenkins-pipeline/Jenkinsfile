@@ -26,16 +26,16 @@ pipeline {
             }
         }
 
-        stage("Remove NGINX") {
-            steps {
-                script {
-                    dir ('jenkins-pipeline/aws') {
-                        sh 'aws eks --region us-east-1 update-kubeconfig --name $(terraform output -raw cluster_name)'
-                        sh 'kubectl delete -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.1.1/deploy/static/provider/do/deploy.yaml'
-                    }
-                }
-            }
-        }
+        // stage("Remove NGINX") {
+        //     steps {
+        //         script {
+        //             dir ('jenkins-pipeline/aws') {
+        //                 sh 'aws eks --region us-east-1 update-kubeconfig --name $(terraform output -raw cluster_name)'
+        //                 sh 'kubectl delete -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.1.1/deploy/static/provider/do/deploy.yaml'
+        //             }
+        //         }
+        //     }
+        // }
 
         stage("Install NGINX & Prometheus") {
             steps {
