@@ -25,6 +25,17 @@ pipeline {
             }
         }
 
+        stage("Install NGINX Ingress with Helm") {
+            steps {
+                script {
+                    dir ('jenkins-pipeline/k8s') {
+                        sh 'aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-EVLKQ4RR'
+                        sh 'helm upgrade --install ingress-nginx ingress-nginx --repo https://kubernetes.github.io/ingress-nginx --namespace ingress-nginx --create-namespace'
+                    }
+                }
+            }
+        }
+
         stage("Deploy notes-app to the cluster") {
             steps {
                 script {
