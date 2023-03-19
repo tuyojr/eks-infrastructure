@@ -4,6 +4,7 @@ metadata:
   name: app-ingress
   annotations:
     kubernetes.io/ingress.class: nginx
+  namespace: sock-shop
 # specifications to use the path based routing for the notes-app and sock-shop app on the domain tuyojr.me
 # the sock-shop app is deployed in the sock-shop namespace
 # the notes-app is deployed in the default namespace
@@ -12,21 +13,13 @@ spec:
   - host: tuyojr.me
     http:
       paths:
-      - path: /notes-app
-        pathType: Prefix
-        backend:
-          service:
-            name: notes-app-service
-            port:
-              number: 80
-      - path: /sock-shop
+      - path: /
         pathType: Prefix
         backend:
           service:
             name: front-end
             port:
               number: 80
-            namespace: sock-shop
   
   # add the tls section to enable TLS
   tls:
