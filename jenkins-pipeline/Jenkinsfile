@@ -38,6 +38,17 @@ pipeline {
             }
         }
 
+        stage("Create Ingress for applications") {
+            steps {
+                script {
+                    dir ('jenkins-pipeline/k8s') {
+                        sh 'aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-vNp6U16l'
+                        sh 'kubectl apply -f ingress.yml'
+                    }
+                }
+            }
+        }
+
         stage("Install Certificate Manager with Helm") {
             steps {
                 script {
