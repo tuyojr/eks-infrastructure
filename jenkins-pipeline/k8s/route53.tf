@@ -1,5 +1,5 @@
 locals {
-  defaults = ["tuyojr.me", "notes-app", "sock-shop"]
+  defaults = ["tuyojr.me"]
 }
 
 resource "aws_route53_zone" "domain" {
@@ -10,37 +10,11 @@ resource "aws_route53_zone" "domain" {
   }
 }
 
-# resource "aws_route53_record" "sub-domain-1" {
-#   zone_id = aws_route53_zone.domain.zone_id
-#   name    = local.defaults[1]
-#   type    = "CNAME"
-#   ttl     = "300" 
+resource "aws_route53_record" "domain-route" {
+  zone_id = aws_route53_zone.domain.zone_id
+  name    = local.defaults[0]
+  type    = "CNAME"
+  ttl     = "300" 
 
-#   records = ["a58001c47e5694136b099ac5511110c9-185002891.us-east-1.elb.amazonaws.com"]
-# }
-
-# resource "aws_route53_record" "sub-domain-2" {
-#   zone_id = aws_route53_zone.domain.zone_id
-#   name    = local.defaults[2]
-#   type    = "CNAME"
-#   ttl     = "300"
-
-#   records = ["a8f4bbcf797914a53adb1a0c8838140a-502033186.us-east-1.elb.amazonaws.com"]
-# }
-
-# module "acm" {
-#   source  = "terraform-aws-modules/acm/aws"
-#   version = "~> 4.0"
-
-#   domain_name  = local.defaults[0]
-#   zone_id      = aws_route53_zone.domain.zone_id
-
-#   subject_alternative_names = [
-#     "${local.defaults[1]}.${local.defaults[0]}",
-#     "${local.defaults[2]}.${local.defaults[0]}",
-#   ]
-
-#   tags = {
-#     Name = "${local.defaults[0]}"
-#   }
-# }
+  records = ["a6949aa5f63174f25999351969d804be-114438520.us-east-1.elb.amazonaws.com"]
+}
