@@ -16,7 +16,7 @@ resource "aws_route53_record" "domain-route1" {
   type    = "CNAME"
   ttl     = "300" 
 
-  records = ["afd954a1486c946df906b38a3f720f91-208271837.us-east-1.elb.amazonaws.com"]
+  records = ["a6c642af84fe448ed8922bb175e5b126-1272802884.us-east-1.elb.amazonaws.com"]
 }
 
 resource "aws_route53_record" "domain-route2" {
@@ -25,5 +25,5 @@ resource "aws_route53_record" "domain-route2" {
   type    = "CNAME"
   ttl     = "300" 
 
-  records = ["afd954a1486c946df906b38a3f720f91-208271837.us-east-1.elb.amazonaws.com"]
+  records = ["afb1a32638588498a9842b32ca704756-1090645815.us-east-1.elb.amazonaws.com"]
 }
