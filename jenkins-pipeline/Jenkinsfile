@@ -19,7 +19,7 @@ pipeline {
                 script {
                     dir ('jenkins-pipeline/aws') {
                         sh 'terraform init'
-                        sh 'terraform delete -auto-approve'
+                        sh 'terraform destroy -auto-approve'
                     }
                 }
             }
