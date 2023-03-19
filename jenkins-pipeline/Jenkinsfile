@@ -28,7 +28,7 @@ pipeline {
         stage("Install NGINX Ingress with Helm") {
             steps {
                 script {
-                    dir ('jenkins-pipeline/k8s') {
+                    dir ('jenkins-pipeline/aws') {
                         sh 'aws eks --region us-east-1 update-kubeconfig --name $(terraform output -raw cluster_name)'
                         sh 'helm upgrade --install ingress-nginx ingress-nginx --repo https://kubernetes.github.io/ingress-nginx --namespace ingress-nginx --create-namespace'
                     }
