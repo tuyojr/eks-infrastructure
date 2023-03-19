@@ -1,88 +1,39 @@
-# locals {
-#     prometheus_config = <<CONFIG
-#         global:
-#             # How frequently to scrape targets by default.
-#             scrape_interval: 1m
-#             # How long until a scrape request times out.
-#             scrape_timeout: 10s
-#             # How frequently to evaluate rules.
-#             evaluation_interval: 1m
+resource "helm_release" "prometheus" {
+  depends_on = [time_sleep.wait_for_kubernetes]
+  name       = "prometheus"
+  repository = "https://prometheus-community.github.io/helm-charts"
+  chart      = "kube-prometheus-stack"
+  create_namespace = true
+  version    = "45.7.1"
+  values = [
+    file("prometheus-values.yml")
+  ]
+  timeout = 2000
+  
 
-#         rule_files:
-#             - "/etc/prometheus/alert.rules"
+set {
+    name  = "podSecurityPolicy.enabled"
+    value = true
+  }
 
-#         alerting:
-#             alertmanagers:
-#             - static_configs:
-#               - targets:
-#                 - alertmanager:9093
+  set {
+    name  = "server.persistentVolume.enabled"
+    value = false
+  }
 
-#         scrape_configs:
-#             - job_name: "frontend"
-#               scrape_interval: 5s
-#               metrics_path: 'metrics'
-#               static_configs:
-#                 - targets: ['edge-router']
-
-#             # The job name assigned to scraped metrics by default.
-#             - job_name: "catalogue"
-#               # How frequently to scrape targets from this job.
-#               scrape_interval: 5s
-#               # List of labeled statically configured targets for this job.
-#               static_configs:
-#               # The targets specified by the static config.
-#                 - targets: ['catalogue']
-
-#             - job_name: "payment"
-#               scrape_interval: 5s
-#               static_configs:
-#                 - targets: ['payment']
-
-#             - job_name: "user"
-#               scrape_interval: 5s
-#               static_configs:
-#                 - targets: ['user']
-
-#             - job_name: "orders"
-#               scrape_interval: 5s
-#               # The HTTP resource path on which to fetch metrics from targets.
-#               metrics_path: 'metrics'
-#               static_configs:
-#                 - targets: ['orders']
-
-#             - job_name: "cart"
-#               scrape_interval: 5s
-#               metrics_path: 'metrics'
-#               static_configs:
-#                 - targets: ['carts']
-
-#             - job_name: "shipping"
-#               scrape_interval: 5s
-#               metrics_path: 'metrics'
-#               static_configs:
-#                 - targets: ['shipping']
-
-#             - job_name: "queue-master"
-#               scrape_interval: 5s
-#               metrics_path: 'prometheus'
-#               static_configs:
-#                 - targets: ['queue-master']
-
-#             - job_name: 'node-exporter'
-#               scrape_interval: 5s
-#               metrics_path: 'metrics'
-#               static_configs:
-#                 - targets: ['nodeexporter:9100']
-#     CONFIG
-# }
-
-# resource "kubernetes_config_map" "prometheus" {
-#     metadata {
-#         name = "prometheus-config"
-#         namespace = "monitoring"
-#     }
-
-#     data = {
-#         "prometheus.yml" = local.prometheus_config
-#     }
-# }
+  # You can provide a map of value using yamlencode. Don't forget to escape the last element after point in the name
+  set {
+    name = "server\\.resources"
+    value = yamlencode({
+      limits = {
+        cpu    = "200m"
+        memory = "50Mi"
+      }
+      requests = {
+        cpu    = "100m"
+        memory = "30Mi"
+      }
+    })
+  }
+}
+  

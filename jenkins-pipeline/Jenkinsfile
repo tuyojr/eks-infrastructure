@@ -37,33 +37,33 @@ pipeline {
         //     }
         // }
 
-        stage("Install NGINX & Prometheus") {
-            steps {
-                script {
-                    dir ('jenkins-pipeline/k8s') {
-                        sh 'aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-vNp6U16l'
-                        sh 'kubectl apply -f ingress.yml'
-                        sh 'terraform init -upgrade'
-                        sh 'terraform apply -auto-approve'
-                    }
-                }
-            }
-        }
+        // stage("Install NGINX & Prometheus") {
+        //     steps {
+        //         script {
+        //             dir ('jenkins-pipeline/k8s') {
+        //                 sh 'aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-vNp6U16l'
+        //                 sh 'kubectl apply -f ingress.yml'
+        //                 sh 'terraform init -upgrade'
+        //                 sh 'terraform apply -auto-approve'
+        //             }
+        //         }
+        //     }
+        // }
 
-        stage("Install Certificate Manager with Helm") {
-            steps {
-                script {
-                    dir ('jenkins-pipeline/k8s') {
-                        sh 'aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-vNp6U16l'
-                        sh 'helm repo add jetstack https://charts.jetstack.io'
-                        sh 'helm repo update'
-                        sh 'kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.11.0/cert-manager.crds.yaml'
-                        // sh 'helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version v1.11.0'
-                        sh 'kubectl apply -f cert.yml'
-                    }
-                }
-            }
-        }
+        // stage("Install Certificate Manager with Helm") {
+        //     steps {
+        //         script {
+        //             dir ('jenkins-pipeline/k8s') {
+        //                 sh 'aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-vNp6U16l'
+        //                 sh 'helm repo add jetstack https://charts.jetstack.io'
+        //                 sh 'helm repo update'
+        //                 sh 'kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.11.0/cert-manager.crds.yaml'
+        //                 // sh 'helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version v1.11.0'
+        //                 sh 'kubectl apply -f cert.yml'
+        //             }
+        //         }
+        //     }
+        // }
 
         stage("Deploy notes-app to the cluster") {
             steps {
@@ -93,17 +93,6 @@ pipeline {
                     dir ('jenkins-pipeline/k8s') {
                         sh "aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-vNp6U16l"
                         sh 'kubectl apply -f sock-shop.yml'
-                    }
-                }
-            }
-        }
-
-        stage("Create Ingress for applications") {
-            steps {
-                script {
-                    dir ('jenkins-pipeline/k8s') {
-                        sh 'aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-vNp6U16l'
-                        sh 'kubectl delete -f ingress.yml'
                     }
                 }
             }
