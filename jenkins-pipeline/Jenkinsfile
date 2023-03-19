@@ -85,7 +85,7 @@ pipeline {
                 script {
                     dir ('jenkins-pipeline/k8s') {
                         sh 'aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-EVLKQ4RR'
-                        sh 'terraform init'
+                        sh 'terraform init -upgrade'
                         sh 'terraform destroy -auto-approve'
                     }
                 }
