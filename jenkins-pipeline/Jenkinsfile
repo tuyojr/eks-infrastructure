@@ -107,16 +107,16 @@ pipeline {
             }
         }
 
-        // stage("Configure DNS") {
-        //     steps {
-        //         script {
-        //             dir ('jenkins-pipeline/k8s') {
-        //                 sh 'aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-vNp6U16l'
-        //                 sh 'terraform init -upgrade'
-        //                 sh 'terraform apply -auto-approve'
-        //             }
-        //         }
-        //     }
-        // }
+        stage("Configure DNS") {
+            steps {
+                script {
+                    dir ('jenkins-pipeline/k8s') {
+                        sh 'aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-vNp6U16l'
+                        sh 'terraform init -upgrade'
+                        sh 'terraform apply -auto-approve'
+                    }
+                }
+            }
+        }
     }
 }

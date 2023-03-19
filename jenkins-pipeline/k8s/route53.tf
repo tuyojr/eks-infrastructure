@@ -1,5 +1,5 @@
 locals {
-  defaults = ["tuyojr.me"]
+  defaults = ["tuyojr.me", "notes-app", "sock-shop"]
 }
 
 resource "aws_route53_zone" "domain" {
@@ -10,11 +10,20 @@ resource "aws_route53_zone" "domain" {
   }
 }
 
-resource "aws_route53_record" "domain-route" {
+resource "aws_route53_record" "domain-route1" {
   zone_id = aws_route53_zone.domain.zone_id
-  name    = local.defaults[0]
+  name    = "${local.defaults[1]}.${local.defaults[0]}"
   type    = "CNAME"
   ttl     = "300" 
 
-  records = ["a6949aa5f63174f25999351969d804be-114438520.us-east-1.elb.amazonaws.com"]
+  records = ["afd954a1486c946df906b38a3f720f91-208271837.us-east-1.elb.amazonaws.com"]
+}
+
+resource "aws_route53_record" "domain-route2" {
+  zone_id = aws_route53_zone.domain.zone_id
+  name    = "${local.defaults[2]}.${local.defaults[0]}"
+  type    = "CNAME"
+  ttl     = "300" 
+
+  records = ["afd954a1486c946df906b38a3f720f91-208271837.us-east-1.elb.amazonaws.com"]
 }
