@@ -14,12 +14,17 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "~> 4.47.0"
+      version = "~> 4.50.0"
     }
 
     random = {
       source  = "hashicorp/random"
       version = "~> 3.4.3"
+    }
+
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = "2.18.1"
     }
 
     tls = {
