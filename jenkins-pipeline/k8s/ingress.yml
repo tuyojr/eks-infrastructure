@@ -13,13 +13,21 @@ spec:
   - host: tuyojr.me
     http:
       paths:
-      - path: /
+      - path: /notes-app
+        pathType: Prefix
+        backend:
+          service:
+            name: notes-app-service
+            port:
+              number: 80
+      - path: /sock-shop
         pathType: Prefix
         backend:
           service:
             name: front-end
             port:
               number: 80
+            namespace: sock-shop
   
   # add the tls section to enable TLS
   tls:
