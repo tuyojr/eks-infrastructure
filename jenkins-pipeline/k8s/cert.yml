@@ -1,12 +1,15 @@
 apiVersion: cert-manager.io/v1
-kind: Certificate
+kind: ClusterIssuer
 metadata:
   name: tuyojr-me-tls
-  namespace: default
+  namespace: cert-manager
 spec:
-  dnsNames:
-  - tuyojr.me
-  secretName: tuyojr-me-tls
-  issuerRef:
-    name: letsencrypt-prod
-    kind: ClusterIssuer
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: olutuyod@gmail.com
+    privateKeySecretRef:
+      name: tuyojr-me-tls
+    solvers:
+    - http01:
+        ingress:
+          class: nginx
