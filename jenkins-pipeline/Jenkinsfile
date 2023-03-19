@@ -46,56 +46,56 @@ pipeline {
                         sh 'helm repo add jetstack https://charts.jetstack.io'
                         sh 'helm repo update'
                         sh 'kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.11.0/cert-manager.crds.yaml'
-                        // sh 'helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version v1.11.0 --set installCRDs=true'
+                        sh 'helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version v1.11.0'
                         sh 'kubectl apply -f cert.yml'
                     }
                 }
             }
         }
 
-        // stage("Deploy notes-app to the cluster") {
-        //     steps {
-        //         script {
-        //             dir ('jenkins-pipeline/k8s') {
-        //                 sh "aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-vNp6U16l"
-        //                 sh 'kubectl delete -f notes-app.yml'
-        //             }
-        //         }
-        //     }
-        // }
+        stage("Deploy notes-app to the cluster") {
+            steps {
+                script {
+                    dir ('jenkins-pipeline/k8s') {
+                        sh "aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-vNp6U16l"
+                        sh 'kubectl delete -f notes-app.yml'
+                    }
+                }
+            }
+        }
 
-        // stage("Setup Weave Works addon for Sock-Shop App") {
-        //     steps {
-        //         script {
-        //             dir ('jenkins-pipeline/k8s') {
-        //                 sh "aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-vNp6U16l"
-        //                 sh 'kubectl delete -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml'
-        //             }
-        //         }
-        //     }
-        // }
+        stage("Setup Weave Works addon for Sock-Shop App") {
+            steps {
+                script {
+                    dir ('jenkins-pipeline/k8s') {
+                        sh "aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-vNp6U16l"
+                        sh 'kubectl delete -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml'
+                    }
+                }
+            }
+        }
 
-        // stage("Deploy Sock-Shop App") {
-        //     steps {
-        //         script {
-        //             dir ('jenkins-pipeline/k8s') {
-        //                 sh "aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-vNp6U16l"
-        //                 sh 'kubectl delete -f sock-shop.yml'
-        //             }
-        //         }
-        //     }
-        // }
+        stage("Deploy Sock-Shop App") {
+            steps {
+                script {
+                    dir ('jenkins-pipeline/k8s') {
+                        sh "aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-vNp6U16l"
+                        sh 'kubectl delete -f sock-shop.yml'
+                    }
+                }
+            }
+        }
 
-        // stage("Deploy Prometheus Manifests") {
-        //     steps {
-        //         script {
-        //             dir ('jenkins-pipeline') {
-        //                 sh 'aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-vNp6U16l'
-        //                 sh 'kubectl delete -f manifests-monitoring/'
-        //             }
-        //         }
-        //     }
-        // }
+        stage("Deploy Prometheus Manifests") {
+            steps {
+                script {
+                    dir ('jenkins-pipeline') {
+                        sh 'aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-vNp6U16l'
+                        sh 'kubectl delete -f manifests-monitoring/'
+                    }
+                }
+            }
+        }
 
         // stage("Configure DNS") {
         //     steps {
@@ -103,7 +103,7 @@ pipeline {
         //             dir ('jenkins-pipeline/k8s') {
         //                 sh 'aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-vNp6U16l'
         //                 sh 'terraform init -upgrade'
-        //                 sh 'terraform destroy -auto-approve'
+        //                 sh 'terraform apply -auto-approve'
         //             }
         //         }
         //     }
