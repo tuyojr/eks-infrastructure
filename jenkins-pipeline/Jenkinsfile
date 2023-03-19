@@ -20,6 +20,7 @@ pipeline {
                     dir ('jenkins-pipeline/aws') {
                         sh 'terraform init'
                         sh 'terraform apply -auto-approve'
+                        sh 'export echo CLUSTER_NAME=$(terraform output -raw cluster_name)'
                     }
                 }
             }
@@ -31,6 +32,22 @@ pipeline {
                     dir ('jenkins-pipeline/aws') {
                         sh 'aws eks --region us-east-1 update-kubeconfig --name $(terraform output -raw cluster_name)'
                         sh 'helm upgrade --install ingress-nginx ingress-nginx --repo https://kubernetes.github.io/ingress-nginx --namespace ingress-nginx --create-namespace'
+                        // sh 'kubectl get services -n ingress-nginx ingress-nginx-controller -o=jsonpath="{.status.loadBalancer.ingress[0].hostname}"'
+                    }
+                }
+            }
+        }
+
+        stage("Install Certificate Manager with Helm") {
+            steps {
+                script {
+                    dir ('jenkins-pipeline/k8s') {
+                        sh 'aws eks --region us-east-1 update-kubeconfig --name $CLUSTER_NAME'
+                        sh 'helm repo add jetstack https://charts.jetstack.io'
+                        sh 'helm repo update'
+                        sh 'kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.11.0/cert-manager.crds.yaml'
+                        sh 'helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version v1.11.0 --set installCRDs=true'
+                        sh 'kubectl apply -f cert.yml'
                     }
                 }
             }
@@ -40,7 +57,7 @@ pipeline {
         //     steps {
         //         script {
         //             dir ('jenkins-pipeline/k8s') {
-        //                 sh "aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-EVLKQ4RR"
+        //                 sh "aws eks --region us-east-1 update-kubeconfig --name $CLUSTER_NAME"
         //                 sh 'kubectl delete -f notes-app.yml'
         //             }
         //         }
@@ -51,7 +68,7 @@ pipeline {
         //     steps {
         //         script {
         //             dir ('jenkins-pipeline/k8s') {
-        //                 sh "aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-EVLKQ4RR"
+        //                 sh "aws eks --region us-east-1 update-kubeconfig --name $CLUSTER_NAME"
         //                 sh 'kubectl delete -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml'
         //             }
         //         }
@@ -62,7 +79,7 @@ pipeline {
         //     steps {
         //         script {
         //             dir ('jenkins-pipeline/k8s') {
-        //                 sh "aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-EVLKQ4RR"
+        //                 sh "aws eks --region us-east-1 update-kubeconfig --name $CLUSTER_NAME"
         //                 sh 'kubectl delete -f sock-shop.yml'
         //             }
         //         }
@@ -73,7 +90,7 @@ pipeline {
         //     steps {
         //         script {
         //             dir ('jenkins-pipeline') {
-        //                 sh 'aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-EVLKQ4RR'
+        //                 sh 'aws eks --region us-east-1 update-kubeconfig --name $CLUSTER_NAME'
         //                 sh 'kubectl delete -f manifests-monitoring/'
         //             }
         //         }
@@ -84,7 +101,7 @@ pipeline {
         //     steps {
         //         script {
         //             dir ('jenkins-pipeline/k8s') {
-        //                 sh 'aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-EVLKQ4RR'
+        //                 sh 'aws eks --region us-east-1 update-kubeconfig --name $CLUSTER_NAME'
         //                 sh 'terraform init -upgrade'
         //                 sh 'terraform destroy -auto-approve'
         //             }
