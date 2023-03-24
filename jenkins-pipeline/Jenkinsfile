@@ -70,7 +70,7 @@ pipeline {
                 script {
                     dir ('jenkins-pipeline/k8s') {
                         sh "aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-vNp6U16l"
-                        sh 'kubectl apply -f notes-app.yml'
+                        sh 'kubectl delete -f notes-app.yml'
                     }
                 }
             }
@@ -81,7 +81,7 @@ pipeline {
                 script {
                     dir ('jenkins-pipeline/k8s') {
                         sh "aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-vNp6U16l"
-                        sh 'kubectl apply -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml'
+                        sh 'kubectl delete -f https://github.com/weaveworks/weave/releases/download/v2.8.1/weave-daemonset-k8s.yaml'
                     }
                 }
             }
@@ -92,7 +92,7 @@ pipeline {
                 script {
                     dir ('jenkins-pipeline/k8s') {
                         sh "aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-vNp6U16l"
-                        sh 'kubectl apply -f sock-shop.yml'
+                        sh 'kubectl delete -f sock-shop.yml'
                     }
                 }
             }
@@ -103,22 +103,22 @@ pipeline {
                 script {
                     dir ('jenkins-pipeline') {
                         sh 'aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-vNp6U16l'
-                        sh 'kubectl apply -f manifests-monitoring/'
+                        sh 'kubectl delete -f manifests-monitoring/'
                     }
                 }
             }
         }
 
-        stage("Configure DNS") {
-            steps {
-                script {
-                    dir ('jenkins-pipeline/k8s') {
-                        sh 'aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-vNp6U16l'
-                        sh 'terraform init -upgrade'
-                        sh 'terraform apply -auto-approve'
-                    }
-                }
-            }
-        }
+        // stage("Configure DNS") {
+        //     steps {
+        //         script {
+        //             dir ('jenkins-pipeline/k8s') {
+        //                 sh 'aws eks --region us-east-1 update-kubeconfig --name tuyojr-eks-vNp6U16l'
+        //                 sh 'terraform init -upgrade'
+        //                 sh 'terraform apply -auto-approve'
+        //             }
+        //         }
+        //     }
+        // }
     }
 }
