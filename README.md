@@ -6,6 +6,7 @@
 
 1. A control node with git, terraform installed.
 2. AWS account, AWS CLI installed and configured.
+3. Terraform Installed on your local system.
 
 ## SETTING UP THE JENKINS SERVER
 
@@ -31,11 +32,53 @@ In the `jenkins-pipeline/k8s` folder, there are configuration files to deploy th
 There are configuration files to deploy prometheus and grafana in the `jenkins-pipeline/manifests-monitoring` folder. You can use these to monitor the applications. To access the prometheus dashboard, you can use the following command on your jenkins server.
 
 ```bash
-kubectl port-forward svc/prometheus-server 9090:80 -n monitoring --address 0.0.0.0
+kubectl port-forward svc/prometheus-server 8081:9090 -n monitoring --address 0.0.0.0
 ```
 
 To access the grafana dashboard, you can use the following command on your jenkins server.
 
 ```bash
-kubectl port-forward svc/grafana 3000:80 -n monitoring --address 0.0.0.0
+kubectl port-forward svc/grafana 8082:80 -n monitoring --address 0.0.0.0
 ```
+
+## OUTPUT OF CREATED EKS INFRASTRUCTURE WITH TERRAFORM
+
+![eks_output](https://github.com/tuyojr/eks-infrastructure/blob/main/images/eks_output.png)
+![eks_vpc](https://github.com/tuyojr/eks-infrastructure/blob/main/images/eks_vpc.png)
+![eks](https://github.com/tuyojr/eks-infrastructure/blob/main/images/eks.png)
+![eks_overview](https://github.com/tuyojr/eks-infrastructure/blob/main/images/eks_overview.png)
+![eks_network](https://github.com/tuyojr/eks-infrastructure/blob/main/images/eks_network.png)
+
+## RUNNING SERVERS
+
+![running_instances](https://github.com/tuyojr/eks-infrastructure/blob/main/images/running_instances.png)
+
+## INSIDE THE CLUSTER
+
+![nodes](https://github.com/tuyojr/eks-infrastructure/blob/main/images/nodes.png)
+![nodes_and_nodegroups](https://github.com/tuyojr/eks-infrastructure/blob/main/images/nodes_and_nodegroups.png)
+![pods_I](https://github.com/tuyojr/eks-infrastructure/blob/main/images/pods_I.png)
+![pods_II](https://github.com/tuyojr/eks-infrastructure/blob/main/images/pods_II.png)
+![notes_app_apply](https://github.com/tuyojr/eks-infrastructure/blob/main/images/notes_app_apply.png)
+![sock_shop_apply](https://github.com/tuyojr/eks-infrastructure/blob/main/images/sock_shop_apply.png)
+![monitoring_apply](https://github.com/tuyojr/eks-infrastructure/blob/main/images/monitoring_apply.png)
+![weave_works_addon](https://github.com/tuyojr/eks-infrastructure/blob/main/images/weave_works_addon.png)
+![deployments_I](https://github.com/tuyojr/eks-infrastructure/blob/main/images/deployments_I.png)
+![deployments_II](https://github.com/tuyojr/eks-infrastructure/blob/main/images/deployments_II.png)
+![deplyments_III](https://github.com/tuyojr/eks-infrastructure/blob/main/images/deployments_III.png)
+![deployments_IV](https://github.com/tuyojr/eks-infrastructure/blob/main/images/deployments_IV.png)
+![deployments_V](https://github.com/tuyojr/eks-infrastructure/blob/main/images/deployments_V.png)
+![configmaps](https://github.com/tuyojr/eks-infrastructure/blob/main/images/configmaps.png)
+![configmaps_II](https://github.com/tuyojr/eks-infrastructure/blob/main/images/configmaps_II.png)
+![namespaces](https://github.com/tuyojr/eks-infrastructure/blob/main/images/namespaces.png)
+
+## CLASSIC LOADBALANCERS
+![loadbalancers](https://github.com/tuyojr/eks-infrastructure/blob/main/images/loadbalancers.png)
+
+## ROUTE53
+![route53_output](https://github.com/tuyojr/eks-infrastructure/blob/main/images/route53_output.png)
+![route53](https://github.com/tuyojr/eks-infrastructure/blob/main/images/route53.png)
+
+## DEPLOYED APPLICATIONS
+![notes-app](https://github.com/tuyojr/eks-infrastructure/blob/main/images/notes-app.png)
+![sock-shop](https://github.com/tuyojr/eks-infrastructure/blob/main/images/sock-shop.png)
